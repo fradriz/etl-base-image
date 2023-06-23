@@ -7,7 +7,7 @@ The image is to have a base image that is stable and not dependent on vendor cha
 
 ![img.png](.imgs/img.png)
 
-## Image Package versions
+## Image Packages Versions
 
 | Name 	| version 	|
 |---	|---	|
