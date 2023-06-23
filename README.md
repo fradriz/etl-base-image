@@ -1,4 +1,4 @@
-# etl-base-image repository
+# etl-base-image
 Docker image with the base libraries for the ETLs.
 
 Using the [python:3.7-slim-buster](https://github.com/docker-library/python/blob/00b80a3dfc595e9c58ec52cc9ae8349cf10767a4/3.7/slim-buster/Dockerfile) `docker pull python:3.7-slim-buster` as base Docker base image.
@@ -27,12 +27,21 @@ $ docker run -it --entrypoint /bin/bash etl-base-image
 ```
 
 ## Update the AWS repository
+
 To update the AWS ECR log into the AWS account and run:
 ```shell
 # after building the image locally run:
 AWS_ACCOUNT_ID=$(aws sts get-caller-identity --query "Account" --output text)
-aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.us-east-1.amazonaws.com
+AWS_REGION=us-east-1              # change this accordingly
+aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com
 # then:
-docker tag $(sudo docker images | awk '{print $3}' | awk 'NR==2') $AWS_ACCOUNT_ID.dkr.ecr.us-east-1.amazonaws.com/etl-base-image
-docker push $AWS_ACCOUNT_ID.dkr.ecr.us-east-1.amazonaws.com/etl-base-image
+docker tag $(sudo docker images | awk '{print $3}' | awk 'NR==2') $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/etl-base-image
+docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/etl-base-image
+```
+
+## Usage
+Reference the image in ECR adding the following to the Dockerfile:
+```shell
+ARG AWS_ACCOUNT_ID
+FROM ${AWS_ACCOUNT_ID}.dkr.ecr.$AWS_REGION.amazonaws.com/etl-base-image
 ```
