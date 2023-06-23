@@ -1,5 +1,5 @@
 # etl-base-image
-Docker image with the base libraries for the ETLs in Verifi
+Docker image with the base libraries for the ETLs
 
 ## DOCKER
 Base image is using these packages and versions to run PySpark:
