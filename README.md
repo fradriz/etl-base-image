@@ -40,7 +40,7 @@ docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/etl-base-image
 ```
 
 ## Usage
-Reference the image in ECR adding the following to the Dockerfile:
+Reference the image in ECR adding the following text to the Dockerfile:
 ```shell
 ARG AWS_ACCOUNT_ID
 FROM ${AWS_ACCOUNT_ID}.dkr.ecr.$AWS_REGION.amazonaws.com/etl-base-image
